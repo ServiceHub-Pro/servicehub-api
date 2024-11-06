@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
-import { required } from "joi";
 
 const providerSchema = new Schema({
     name: {type: String,required: true },
