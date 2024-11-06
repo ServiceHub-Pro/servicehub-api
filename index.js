@@ -5,7 +5,7 @@ import providerRouter from "./routes/provider-routes.js";
 import cors from "cors";
 
 // set up port
-const PORT = 4500;
+const PORT = 3200;
 
 // create express app
 const app = express(); 

@@ -5,6 +5,7 @@ export const registerProviderValidator = Joi.object({
     password: Joi.string().required(),
     email: Joi.string().email().required(),
     contact: Joi.number().required(),
+    avatar: Joi.string(),
     role: Joi.string().valid('customer','provider')
 });
 
