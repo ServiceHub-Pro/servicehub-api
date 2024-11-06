@@ -1,11 +1,12 @@
 import { Schema, model } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
+import { required } from "joi";
 
 const providerSchema = new Schema({
     name: {type: String,required: true },
     email: {type: String,required: true, unique: true},
     password: {type: String,required: true},
-    // card: {type: String,required: true, unique: true},
+    contact:{type: Number,required: true},
     avatar: {type: String,required: true},
     role:{
         type: String, 
