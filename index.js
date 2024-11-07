@@ -4,8 +4,7 @@ import serviceRouter from "./routes/services-routes.js";
 import providerRouter from "./routes/provider-routes.js";
 import cors from "cors";
 
-// set up port
-const PORT = 3200;
+
 
 // create express app
 const app = express(); 
@@ -22,6 +21,6 @@ app.use(serviceRouter);
 app.use(providerRouter);
 
 // listen for incoming requests
-app.listen(PORT, () => {
-    console.log(`App is listening on port ${PORT}`);
+app.listen(3200, () => {
+    console.log('App is listening on port 3200');
 });
