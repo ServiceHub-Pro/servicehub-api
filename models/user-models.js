@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
-const providerSchema = new Schema({
+const userSchema = new Schema({
     name: {type: String, required: true },
     email: {type: String,required: true, unique: true},
     password: {type: String,required: true},
@@ -9,8 +9,8 @@ const providerSchema = new Schema({
     avatar: {type: String},
     role:{
         type: String, 
-        default: 'provider',
-        enum: ['customer', 'provider']
+        default: 'user',
+        enum: ['user', 'provider']
 
     } 
 },  
@@ -19,6 +19,6 @@ const providerSchema = new Schema({
     timestamps: true
 });
 
-providerSchema.plugin(toJSON);
+userSchema.plugin(toJSON);
 
-export const ProviderModel = model('Provider', providerSchema);
+export const UserModel = model('User', userSchema);

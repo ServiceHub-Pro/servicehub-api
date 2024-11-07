@@ -1,9 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import serviceRouter from "./routes/services-routes.js";
-import providerRouter from "./routes/provider-routes.js";
+import userRouter from "./routes/user-routes.js";
 import cors from "cors";
-
 
 
 // create express app
@@ -18,7 +17,7 @@ app.use(express.json());
 
 // use routes
 app.use(serviceRouter);
-app.use(providerRouter);
+app.use(userRouter);
 
 // listen for incoming requests
 app.listen(3200, () => {

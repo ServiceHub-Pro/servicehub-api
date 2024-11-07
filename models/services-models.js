@@ -8,7 +8,7 @@ const serviceSchema = new Schema({
     image: {type: String,required: true},
     category: {type: String,required: true},
     location: {type: String,required: true},
-    user:{type:Types.ObjectId, required: true, ref: 'User'}
+    user: {type: Types.ObjectId, ref: 'User'}
 }, {
     timestamps: true
 });

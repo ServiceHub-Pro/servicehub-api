@@ -11,10 +11,10 @@ export const serviceIconUpload = multer({
     preservePath: true
 })
 
-export const providerAvatarUpload = multer({
+export const userAvatarUpload = multer({
   storage: multerSaveFilesOrg({
     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
-    relativePath: "/backend-api/providers/*",
+    relativePath: "/backend-api/users/*",
   }),
   preservePath: true  
 })

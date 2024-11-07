@@ -1,5 +1,5 @@
-import { loginProviderValidator, registerProviderValidator, updateProviderValidator } from "../validators/provider-validators.js";
-import { ProviderModel } from "../models/provider-models.js";
+import { registerUserValidator, loginUserValidator, updateProfileValidator } from "../validators/user-validators.js";
+import { UserModel } from "../models/user-models.js";
 import { ServiceModel } from "../models/services-models.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -7,16 +7,16 @@ import { mailTransporter } from "../utils/mail.js";
 
 
 // Register, Login, Logout
-export const registerProvider = async(req,res,next)=>{
+export const registerUser = async(req,res,next)=>{
     try {
         // Validate user input
-        const {error, value} = registerProviderValidator.validate(req.body);
+        const {error, value} = registerUserValidator.validate(req.body);
         if (error){
             return res.status(422).json(error);
         }
         // Check if user does not exist
-        const provider = await ProviderModel.findOne({email: value.email});
-        if (provider) {
+        const user = await UserModel.findOne({email: value.email});
+        if (user) {
             return res.status(409).json('User already exist!');
         }
         // Hash their password
@@ -28,7 +28,7 @@ export const registerProvider = async(req,res,next)=>{
             text: 'Account Registered Successfully'
         });
 
-        await ProviderModel.create({
+        await UserModel.create({
             ...value,
             password: hashedPassword
         });
@@ -41,26 +41,26 @@ res.json({
     }
 }
 
-export const loginProvider = async(req,res,next) => {
+export const loginUser = async(req,res,next) => {
     try {
-       const {error, value} = loginProviderValidator.validate(req.body);
+       const {error, value} = loginUserValidator.validate(req.body);
        if(error){
         return res.status(422).json(error);
        }
     //Find one user with identifier
-    const provider = await ProviderModel.findOne({email:value.email});
-    if(!provider){
+    const user = await UserModel.findOne({email:value.email});
+    if(!user){
         return res.status(404).json
         ('User does not exist');
     }
     //Compare their passwords
-    const correctPassword = bcrypt.compareSync(value.password, provider.password);
+    const correctPassword = bcrypt.compareSync(value.password, user.password);
     if (!correctPassword){
         return res.status(401).json('Invalid Crendentials!');
     }
     // Sign a token for  user
     const token = jwt.sign(
-        {id:provider.id}, 
+        {id:user.id}, 
         process.env.JWT_PRIVATE_KEY,
         {expiresIn:'24h' /* it can be 1d or 1m*/ }
     );
@@ -75,19 +75,19 @@ export const loginProvider = async(req,res,next) => {
     }
 }
 
-export const getProvider = async (req,res,next)=>{
+export const getProfile = async (req,res,next)=>{
     try {
         // Find authentication user from database
-        const provider = await ProviderModel.findById(req.auth.id)
+        const user = await UserModel.findById(req.auth.id)
         .select({password: false});
          // Respond to request
-         res.json(provider);
+         res.json(user);
     } catch (error) {
        next(error) ;
     }
 }
 
-export const getProviderServices = async (req,res,next)=>{
+export const getUserServices = async (req,res,next)=>{
     try {
         const { filter = "{}",sort="{}", limit = 20,
             skip = 0 } = req.query;
@@ -107,20 +107,20 @@ export const getProviderServices = async (req,res,next)=>{
     }
 }
 
-export const logoutProvider = (req,res,next)=>{
+export const logoutUser = (req,res,next)=>{
     res.json({
        message: 'User Logged Out!'
     });
 }
 
-export const updateProvider = async(req,res,next)=>{
+export const updateProfile = async(req,res,next)=>{
 try {
     // validate user input
-    const {error,value} = updateProviderValidator.validate(req.body);
+    const {error,value} = updateProfileValidator.validate(req.body);
     if (error){
         return res.status(422).json(error);
     }
-    await ProviderModel.findByIdAndUpdate(value);
+    await UserModel.findByIdAndUpdate(value);
     res.json('User Profile Updated!')
 } catch (error) {
    next(error) 

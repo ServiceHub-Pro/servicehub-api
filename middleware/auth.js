@@ -1,5 +1,5 @@
 import { expressjwt } from "express-jwt";
-import { ProviderModel } from "../models/provider-models.js";
+import { UserModel } from "../models/user-models.js";
 import { permissions } from "../utils/rbac.js";
 
 
@@ -12,9 +12,9 @@ export const hasPermission = (action) => {
     return async (req, res, next) => {
         try {
             // Find user from database
-            const provider = await ProviderModel.findById(req.auth.id);
+            const user = await UserModel.findById(req.auth.id);
             // Use the user role to find their permission
-            const permission = permissions.find(value => value.role === provider.role);
+            const permission = permissions.find(value => value.role === user.role);
             if (!permission) {
                 return res.status(403).json('No permission found!');
             }

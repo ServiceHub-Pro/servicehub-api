@@ -9,7 +9,7 @@ try {
         // validate user input
         const { error, value } = addServiceValidator.validate({
             ...req.body,
-            icon: req.file?.filename
+            image: req.file?.filename
         });
         if (error) {
             return res.status(422).json(error);
@@ -19,7 +19,7 @@ try {
             // value
             {
              ...value,
-             provider: req.auth.id 
+             user: req.auth.id 
             }   
         );
     
@@ -90,7 +90,7 @@ export const updateService = async (req, res, next) => {
       const serviceUpdate = await ServiceModel.// findByIdAndUpdate(req.params.id, value, {new:true});
       findOneAndUpdate({
        _id:req.params.id,
-       provider: req.auth.id}, value, {new: true});
+       user: req.auth.id}, value, {new: true});
 
        if (!serviceUpdate){
        return res.status(404).json('Service not found')
@@ -108,7 +108,7 @@ export const deleteService  = async (req, res, next) => {
         const serviceDelete = await ServiceModel./*findByIdAndDelete(req.params.id);*/
         findOneAndDelete({
             _id:req.params.id,
-            provider: req.auth.id}/*, value, {new: true}*/);
+            user: req.auth.id}/*, value, {new: true}*/);
             if (!serviceDelete){
             return res.status(404).json('Service not deleted !')
             }

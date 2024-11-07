@@ -1,6 +1,6 @@
 export const permissions = [
     {
-        role: 'customer',
+        role: 'user',
         actions: [
             'get_service',
             'get_allservices',
@@ -15,7 +15,7 @@ export const permissions = [
             'count_services',
             'add_service',
             'update_service',
-            'get_service',
+            'get_oneservice',
             'get_allservices',
             'delete_service',
             'update_profile',
