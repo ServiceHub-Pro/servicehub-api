@@ -6,7 +6,7 @@ export const registerUserValidator = Joi.object({
     email: Joi.string().email().required(),
     contact: Joi.number().required(),
     avatar: Joi.string(),
-    role: Joi.string().valid('user','customer')
+    role: Joi.string().valid('user','provider')
 });
 
 export const loginUserValidator = Joi.object({

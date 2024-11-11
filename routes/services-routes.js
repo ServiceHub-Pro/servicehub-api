@@ -6,7 +6,7 @@ import { hasPermission, isAuthenticated } from "../middleware/auth.js";
 const serviceRouter = Router();
 
 // define routes
-serviceRouter.post("/services", isAuthenticated,hasPermission('add_service'), serviceIconUpload.single("icon"), addService);
+serviceRouter.post("/services", isAuthenticated,hasPermission('add_service'), serviceIconUpload.single("image"), addService);
 
 serviceRouter.get("/services",  getAllServices);
 
@@ -14,9 +14,9 @@ serviceRouter.get("/services/count", isAuthenticated, hasPermission('count_servi
 
 serviceRouter.get("/services/:id", getOneService);
 
-serviceRouter.patch("/services/:id", isAuthenticated, hasPermission( 'update_service') ,serviceIconUpload.single("icon"), updateService);
+serviceRouter.patch("/services/:id", isAuthenticated, hasPermission( 'update_service') ,serviceIconUpload.single("image"), updateService);
 
-serviceRouter.delete("/servides/:id", isAuthenticated, hasPermission('delete_service'),deleteService);
+serviceRouter.delete("/services/:id", isAuthenticated, hasPermission('delete_service'),deleteService);
 
 // Export router
 export default serviceRouter;

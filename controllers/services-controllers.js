@@ -80,7 +80,7 @@ export const updateService = async (req, res, next) => {
     try {
         const { error, value } = updateServiceValidator.validate({
             ...req.body,
-            icon: req.file?.filename
+            image: req.file?.filename
         });
 
         if (error) {
