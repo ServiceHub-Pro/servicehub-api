@@ -116,11 +116,14 @@ export const logoutUser = (req,res,next)=>{
 export const updateProfile = async(req,res,next)=>{
 try {
     // validate user input
-    const {error,value} = updateProfileValidator.validate(req.body);
+    const {error,value} = updateProfileValidator.validate({
+        ...req.body,
+        avatar: req.file?.filename
+    });
     if (error){
         return res.status(422).json(error);
     }
-    await UserModel.findByIdAndUpdate(value);
+    await UserModel.findByIdAndUpdate(req.auth.id, value);
     res.json('User Profile Updated!')
 } catch (error) {
    next(error) 
