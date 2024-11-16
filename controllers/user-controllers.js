@@ -24,7 +24,7 @@ export const registerUser = async(req,res,next)=>{
         //Save the user into database
         await mailTransporter.sendMail({
             to: value.email,
-            subject: 'User Registration',
+            subject: 'Service Hub Account Registration',
             text: 'Account Registered Successfully'
         });
 
@@ -67,7 +67,7 @@ export const loginUser = async(req,res,next) => {
 
     // Respond to request
     res.json({
-        message: 'User Logged In',
+        message: 'User Logged In Successfully!',
         accessToken: token
     });
     } catch (error) {
