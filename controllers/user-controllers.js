@@ -60,7 +60,9 @@ export const loginUser = async(req,res,next) => {
     }
     // Sign a token for  user
     const token = jwt.sign(
-        {id:user.id}, 
+        { id:user.id,
+          role:user.role  
+        }, 
         process.env.JWT_PRIVATE_KEY,
         {expiresIn:'24h' /* it can be 1d or 1m*/ }
     );
@@ -68,7 +70,8 @@ export const loginUser = async(req,res,next) => {
     // Respond to request
     res.json({
         message: 'User Logged In Successfully!',
-        accessToken: token
+        accessToken: token,
+        role:user.role
     });
     } catch (error) {
      next(error)   
