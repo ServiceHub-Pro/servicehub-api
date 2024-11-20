@@ -6,32 +6,36 @@ import { ServiceModel } from "../models/services-models.js";
 // create a booking
 export const addBooking = async (req, res, next) => {
     
-    const { error, value } = addBookingValidator.validate(req.body);
-    if (error) {
-        return res.status(422).json(error);
-    }
-
-    
-        const { serviceId, date, time } = req.body;
-    
-        // Check if the service exists
-        const service = await ServiceModel.findById(serviceId);
-        if (!service) {
-          return res.status(404).json({ message: "Service not found" });
+    try {
+        const { error, value } = addBookingValidator.validate(req.body);
+        if (error) {
+            return res.status(422).json(error);
         }
-
-        //add booking to database
-        const booking = new BookingModel({
-            service,
-            date,
-            time,
-            user: req.user.id, // Assuming authentication middleware sets req.user
-            provider: serviceId.provider, // Provider from the Service details
-            status: "Pending",
-          });
-
-          await booking.save();
-          res.status(201).json('Booking created successfully!', booking);
+    
+        
+            const { serviceId, date, time } = req.body;
+        
+            // Check if the service exists
+            const service = await ServiceModel.findById(serviceId);
+            if (!service) {
+              return res.status(404).json({ message: "Service not found" });
+            }
+    
+            //add booking to database
+            const booking = new BookingModel({
+                service,
+                date,
+                time,
+                user: req.user.id, // Assuming authentication middleware sets req.user
+                provider: serviceId.provider, // Provider from the Service details
+                status: "Pending",
+              });
+    
+              await booking.save();
+              res.status(201).json('Booking created successfully!', booking);
+    } catch (error) {
+       next(error); 
+    }
 };
 
 
